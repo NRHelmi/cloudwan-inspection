@@ -1,0 +1,7 @@
+# Allow
+pass tcp any any -> any any (msg:"allow all tcp"; sid:1; rev:1;)
+pass udp any any -> any any (msg:"allow all udp"; sid:2; rev:1;)
+pass icmp any any -> any any (msg:"allow all icmp"; sid:3; rev:1;)
+
+# Drop all other traffics
+drop ip any any -> any any (msg:"drop all non configured traffic"; sid:4; rev:1;)

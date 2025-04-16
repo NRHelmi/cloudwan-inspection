@@ -1,0 +1,25 @@
+variable "name" {
+  type = string
+}
+
+variable "vpc" {
+  type = object({
+    name             = string
+    cidr             = string
+    interco_subnets  = list(string)
+    firewall_subnets = list(string)
+    azs              = list(string)
+  })
+}
+
+variable "core_network_id" {
+  type = string
+}
+
+variable "core_network_arn" {
+  type = string
+}
+
+variable "cw_attach" {
+  type = string
+}
