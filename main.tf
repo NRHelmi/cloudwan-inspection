@@ -14,6 +14,10 @@ module "inspection" {
   core_network_id  = aws_networkmanager_core_network.core_network.id
   core_network_arn = aws_networkmanager_core_network.core_network.arn
   cw_attach        = "POCInspectionNFG"
+
+  depends_on = [
+    aws_networkmanager_core_network_policy_attachment.poc_core_network_policy_attachement
+  ]
 }
 
 # POC project A
@@ -34,7 +38,7 @@ module "projectA" {
   cw_attach        = "SegA"
 
   depends_on = [
-    module.inspection
+    aws_networkmanager_core_network_policy_attachment.poc_core_network_policy_attachement
   ]
 }
 
@@ -56,6 +60,6 @@ module "projectB" {
   cw_attach        = "SegB"
 
   depends_on = [
-    module.inspection
+    aws_networkmanager_core_network_policy_attachment.poc_core_network_policy_attachement
   ]
 }

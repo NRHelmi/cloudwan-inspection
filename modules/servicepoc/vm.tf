@@ -76,7 +76,7 @@ resource "aws_iam_instance_profile" "ssm_instance_profile" {
   role = aws_iam_role.ssm_role.name
 }
 
-resource "aws_vpc_endpoint" "ssm_servicesa" {
+resource "aws_vpc_endpoint" "ssm_services" {
   count = length(local.service_names)
 
   vpc_id              = aws_vpc.vpc.id

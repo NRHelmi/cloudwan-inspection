@@ -30,6 +30,8 @@ resource "aws_route_table" "interco_subnets_rt" {
   route {
     cidr_block      = "0.0.0.0/0"
     vpc_endpoint_id = lookup(local.fw_vpc_endpoints, aws_subnet.firewall_subnets[count.index].id, null)
+
+    # WORKS: if routing everything to a single firewall vpc endpoint
     #vpc_endpoint_id = lookup(local.fw_vpc_endpoints, aws_subnet.firewall_subnets[0].id, null)
   }
 
