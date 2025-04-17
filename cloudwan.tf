@@ -65,6 +65,20 @@ data "aws_networkmanager_core_network_policy_document" "core_network_policy" {
     }
   }
 
+  segment_actions {
+    action  = "send-via"
+    segment = "SegB"
+    mode    = "single-hop"
+    when_sent_to {
+      segments = [
+        "SegA"
+      ]
+    }
+    via {
+      network_function_groups = ["POCInspectionNFG"]
+    }
+  }
+
   # attachment policies
   attachment_policies {
     rule_number     = 100

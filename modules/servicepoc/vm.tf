@@ -4,7 +4,6 @@ locals {
     "com.amazonaws.${var.region}.ssmmessages",
     "com.amazonaws.${var.region}.ec2messages"
   ]
-  core_network_id = "core-network-0d589a04cfd762b9f"
 }
 
 resource "aws_security_group" "sg_ssm" {
@@ -101,12 +100,12 @@ resource "aws_instance" "instance" {
             #!/bin/bash
             mkdir /var/www
             cd /var/www
-            echo "<h1>Hello from $(hostname -f) in ${var.name}</h1>" > index.html
+            echo "<h1>Hello from $(hostname -f) in ${var.name} - ${aws_subnet.subnets[count.index].availability_zone}</h1>" > index.html
             python3 -m http.server 80 --bind 0.0.0.0 &
             EOF
   source_dest_check      = true
 
   tags = {
-    Name = "${var.name}-instance-az${count.index + 1}"
+    Name = "${var.name}-instance-${var.vpc.azs[count.index]}"
   }
 }
