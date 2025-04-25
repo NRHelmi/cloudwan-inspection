@@ -3,30 +3,27 @@ resource "aws_networkfirewall_firewall_policy" "firewall_policy" {
   name = "firewall-policy"
 
   firewall_policy {
-    #stateless_default_actions          = ["aws:forward_to_sfe"]
-    #stateless_fragment_default_actions = ["aws:forward_to_sfe"]
+    stateless_default_actions          = ["aws:forward_to_sfe"]
+    stateless_fragment_default_actions = ["aws:forward_to_sfe"]
 
-    stateless_default_actions          = ["aws:pass"]
-    stateless_fragment_default_actions = ["aws:pass"]
-
-    # stateful_rule_group_reference {
-    #   resource_arn = aws_networkfirewall_rule_group.fw_rules_group.arn
-    # }
+    stateful_rule_group_reference {
+      resource_arn = aws_networkfirewall_rule_group.fw_rules_group.arn
+    }
   }
 }
 
 # statefull firewall rules group
-# resource "aws_networkfirewall_rule_group" "fw_rules_group" {
-#   name     = "inspection-fw-stateful-rules"
-#   capacity = 10000
-#   type     = "STATEFUL"
+resource "aws_networkfirewall_rule_group" "fw_rules_group" {
+  name     = "inspection-fw-stateful-rules"
+  capacity = 10000
+  type     = "STATEFUL"
 
-#   rule_group {
-#     rules_source {
-#       rules_string = file("${path.module}/data/inspection_firewall.rules")
-#     }
-#   }
-# }
+  rule_group {
+    rules_source {
+      rules_string = file("${path.module}/data/inspection_firewall.rules")
+    }
+  }
+}
 
 # inspection AWS Network Firewall
 resource "aws_networkfirewall_firewall" "inspection_firewall" {

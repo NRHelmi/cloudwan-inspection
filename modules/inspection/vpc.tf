@@ -90,6 +90,10 @@ resource "aws_networkmanager_vpc_attachment" "vpc_attachment" {
   vpc_arn         = aws_vpc.inspection_vpc.arn
   subnet_arns     = [for subnet in aws_subnet.interco_subnets : subnet.arn]
 
+  options {
+    appliance_mode_support = true
+  }
+
   tags = {
     Name     = "${var.name}-core-network-attachment"
     CWAttach = var.cw_attach
